@@ -6,11 +6,11 @@
  
 $capsule->addConnection(array(
 	'driver'    => 'mysql',
-	'host'      => getenv('IP'),
+	'host'      => 'localhost',
 	'port'      => 3306,
-	'database'  => 'c9',
-	'username'  => getenv('C9_USER'),
-	'password'  => '',
+	'database'  => 'magics',
+	'username'  => 'magics',
+	'password'  => 'pacopacopacopaco2016',
 	'prefix'    => '',
 	'charset'   => "utf8",
 	'collation' => "utf8_unicode_ci"

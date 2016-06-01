@@ -75,6 +75,10 @@ app.controller('MenuController', function($scope, $modal, $cookieStore, $locatio
 		modalVerCarta($modal, a);
 	}
 
+	$scope.verMano = function(a, b, c, d){
+		modalVerMano($modal, a, b, c, d);
+	}
+
 	$scope.retMano = function (a, b, c) {
 		$scope.remove(b, a);
 		$scope.goodShift(c, a);
@@ -132,7 +136,7 @@ app.controller('MenuController', function($scope, $modal, $cookieStore, $locatio
 		}
 	};
 
-	$scope.verCementerio = function(cementerio, enJuego, mano){
-		modalVerCementerio($modal, cementerio, enJuego, mano);
+	$scope.verCementerio = function(a, b, c){
+		modalVerCementerio($modal, a, b, c);
 	}
 });

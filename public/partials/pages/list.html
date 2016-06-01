@@ -15,9 +15,9 @@
 						class="form-control"
 						ng-model="busM">
 				</select>
-				<button class="btn btn-info" ng-if="busB" ng-click="busJ(busM, mazoBarajado , enJuego)">Poner en juego</button>
-				<button class="btn btn-info" ng-if="busB" ng-click="busMa(busM, mazoBarajado , mano)" ng-disabled="!busM">Poner en mano</button>
-				<img ng-if="mazoBarajado.length > 0" class="mazo" src="img/62.png" ng-click="robar(mazoBarajado, mano)">
+				<button class="btn btn-info" ng-show="busB" ng-click="busJ(busM, mazoBarajado , enJuego)">Poner en juego</button>
+				<button class="btn btn-info" ng-show="busB" ng-click="busMa(busM, mazoBarajado , mano)" ng-disabled="!busM">Poner en mano</button>
+				<img ng-if="mazoBarajado.length > 0" class="mazo" ng-src="img/62.png" ng-click="robar(mazoBarajado, mano)">
 				
 			</div>
 			<div class="col-xs-8">
@@ -56,10 +56,8 @@
 				<button ng-if="!item.tap" class="btn btn-success" ng-click="usada(item)">Tap</button>
 			</div>
 		</div>
-			{{mano}}
-		<div class="col-xs-3" ng-repeat="item in mano track by $index">
-			<img ng-click="verCarta(item)" ng-src="{{item.url}}">
-			<button class="btn btn-info" ng-click="juego(item, mano, enJuego)">Poner en juego</button>
+		<div class="col-xs-3">
+			<img class="carta" ng-click="verMano(mano, enJuego, enJuegoT, cementerio)" ng-src="img/62.png">
 		</div>
 	<!--
 	<div class="col-sm-3">

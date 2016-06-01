@@ -49,7 +49,7 @@ function modalVerCementerio($modal, cementerio, enJuego, mano){
 		templateUrl: 'partials/pages/cementerio.html',
 		controller: 'CementerioController',
 		backdrop: 'static',
-		size: 'md',
+		size: 'lg',
 		resolve: {
 			cementerio: function () {
 				return cementerio;
@@ -74,6 +74,30 @@ function modalVerCarta($modal, preference){
 		resolve: {
 			preference: function () {
 				return preference;
+			}
+		}
+	});
+	return modalInstance;
+};
+
+function modalVerMano($modal, mano, enJuego, enJuegoT, cementerio){
+	var modalInstance = $modal.open({
+		templateUrl: 'partials/pages/mano.html',
+		controller: 'ManoController',
+		backdrop: 'static',
+		size: 'lg',
+		resolve: {
+			mano: function () {
+				return mano;
+			},
+			enJuego: function () {
+				return enJuego;
+			},
+			enJuegoT: function () {
+				return enJuegoT;
+			},
+			cementerio: function () {
+				return cementerio;
 			}
 		}
 	});

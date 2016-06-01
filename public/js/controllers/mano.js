@@ -1,23 +1,22 @@
-app.controller('CementerioController', function($scope, $cookieStore, $http, $modal, $modalInstance, $route, cementerio, enJuego, mano) {
+app.controller('ManoController', function($scope, $cookieStore, $http, $modal, $modalInstance, $route, mano, enJuego, enJuegoT, cementerio) {
 	$scope.enJuego = enJuego;
-	$scope.mano = mano;
-	var thisCementerio = [];
-	var thisMano = [];
-	var thisEnJuego = [];
-	console.log(cementerio);
 	$scope.cementerio = cementerio;
+	$scope.mano = mano;
+	var thisCementerio = {};
+	$scope.enJuegoT = enJuegoT;
 
 	$scope.goodShift = function(a, b){
 		a.unshift(b);
 	}
 
 	$scope.remove = function(a, b){
-		b.splice(a, 1);
+		a.splice(b, 1);
 	};
 
 	$scope.a = function (a, b, c) {
+		console.log(a);
 		$scope.goodShift(c, a);
-		$scope.remove(a, b);
+		$scope.remove(b, a);
 	}
 
 	$scope.closeModal = function () {

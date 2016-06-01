@@ -1,0 +1,20 @@
+<div id="list" class="modal-header modal-header-default">
+	<h3 class="modal-title">Cartas en la mano</h3>
+</div>
+
+<div class="modal-body">
+	<div class="col-xs-12">
+		<div ng-repeat="item in mano | orderBy: 'nombre' track by $index" class="col-xs-3">
+			<img class="carta" ng-src="{{item.url}}">
+			<p>{{item.nombre}}</p>
+			<button class="btn btn-danger" ng-click="a(item, mano, enJuegoT)">Bajar tierra</button>
+			<button class="btn btn-danger" ng-click="a(item, mano, enJuego)">Al juego</button>
+			<button class="btn btn-danger" ng-click="a(item, mano, cementerio)">Al cementerio</button>
+		</div>
+	</div>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-danger" ng-click="closeModal()">Cerrar</button>
+</div>
+

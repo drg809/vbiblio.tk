@@ -1,20 +1,19 @@
-<form>
-	<div class="modal-header modal-header-default">
-		<h3 class="modal-title">Cartas en la mano</h3>
-	</div>
+<div class="modal-header modal-header-default">
+	<h3 class="modal-title">Cartas en el cementerio</h3>
+</div>
 
-	<div class="modal-body">
-		<div class="col-xs-12">
-			<div ng-repeat="item in cementerio" class="col-xs-3">
-				<img ng-src="{{item.url}}">
-				<p>{{item.nombre}}</p>
-				<button class="btn btn-danger" ng-click="a(item, cementerio, enJuego)">Al juego</button>
-				<button class="btn btn-danger" ng-click="a(item, cementerio, mano)">A la mano</button>
-			</div>
+<div class="modal-body">
+	<div class="col-xs-12">
+		<div ng-repeat="item in cementerio | orderBy: 'nombre' track by $index" class="col-xs-3">
+			<img ng-src="{{item.url}}">
+			<p>{{item.nombre}}</p>
+			<button class="btn btn-danger" ng-click="a(item, cementerio, enJuego)">Al juego</button>
+			<button class="btn btn-danger" ng-click="a(item, cementerio, mano)">A la mano</button>
 		</div>
 	</div>
+</div>
 
-	<div class="modal-footer">
-		<button class="btn btn-danger" ng-click="closeModal()">Cerrar</button>
-	</div>
-</form>
+<div class="modal-footer">
+	<button class="btn btn-danger" ng-click="closeModal()">Cerrar</button>
+</div>
+
