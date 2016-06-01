@@ -3,30 +3,31 @@
 		<div class="col-xs-12">
 			<div class="col-xs-3">
 				<button class="btn btn-success" ng-click="inicio()">Iniciar</button>
-				<button class="btn btn-info" ng-if="mazoBarajado.length > 0" ng-click="mazoCementerio()">Exiliar1ªmazo</button>
-				<button class="btn btn-info" ng-if="mano.length > 0" ng-click="desRobo()">Des robar</button>
-				<button class="btn btn-info" ng-if="cementerio.length > 0" ng-click="desCemen()">Des cemen</button>
-				<button class="btn btn-info" ng-if="mano.length > 0" ng-click="manoC()">Carta azar m>c</button>
+				<button class="btn btn-info" ng-if="mazoBarajado.length > 0" ng-click="mazoCementerio(mazoBarajado, cementerio)">Exiliar1ªmazo</button>
+				<button class="btn btn-info" ng-if="mano.length > 0" ng-click="desRobo(mano, mazoBarajado)">Des robar</button>
+				<button class="btn btn-info" ng-if="cementerio.length > 0" ng-click="desCemen(mazoBarajado, cementerio)">Des cemen</button>
+				<button class="btn btn-info" ng-if="mano.length > 0" ng-click="manoC(mano, cementerio)">Carta azar m>c</button>
 				<button class="btn btn-info" ng-if="mazoBarajado.length > 0" ng-click="barajar()">Barajar</button>
 				<button class="btn btn-info" ng-if="!busB && mazoBarajado.length > 0" ng-click="buscar()">Buscar mazo</button>
-				<select ng-if="busB" class="form-control" ng-model="busM">
-					<option value="">Biblioteca: </option>
-					<option ng-repeat="item in mazoBarajado" value="{{item}}">{{item.nombre}}</option>
+				<select ng-options="item as item.nombre for item in mazoBarajado track by item.id"
+						ng-value="{{$index}}"
+						ng-show="busB"
+						class="form-control"
+						ng-model="busM">
 				</select>
-				<button class="btn btn-info" ng-if="busB" ng-click="busJ()">Poner en juego</button>
-				<button class="btn btn-info" ng-if="busB" ng-click="busMa()">Poner en mano</button>
-				<img ng-if="mazoBarajado.length > 0" class="mazo" src="img/62.png" ng-click="robar()">
+				<button class="btn btn-info" ng-if="busB" ng-click="busJ(busM, mazoBarajado , enJuego)">Poner en juego</button>
+				<button class="btn btn-info" ng-if="busB" ng-click="busMa(busM, mazoBarajado , mano)" ng-disabled="!busM">Poner en mano</button>
+				<img ng-if="mazoBarajado.length > 0" class="mazo" src="img/62.png" ng-click="robar(mazoBarajado, mano)">
 				
 			</div>
 			<div class="col-xs-8">
-				<div class="col-xs-3" ng-repeat="item in enJuego">
+				<div class="col-xs-3" ng-repeat="item in enJuego track by $index">
 					<img class="mazo" ng-click="verCarta(item)" ng-src="{{item.url}}">
-					<button class="btn btn-danger" ng-click="retMano(item)">Mano</button>
-					<button class="btn btn-danger" ng-click="retCem(item)">Cementerio</button>
-					<button class="btn btn-danger" ng-click="tierra(item)">Tierra</button>
+					<button class="btn btn-danger" ng-click="retMano(item, enJuego, mano)">Mano</button>
+					<button class="btn btn-danger" ng-click="retCem(item, enJuego, cementerio)">Cementerio</button>
+					<button class="btn btn-danger" ng-click="tierra(item, enJuego, enJuegoT)">Tierra</button>
 					<button ng-if="item.tap" class="btn btn-danger" ng-click="usada(item)">N-tap</button>
 					<button ng-if="!item.tap" class="btn btn-success" ng-click="usada(item)">Tap</button>
-					{{busM}}
 				</div>
 			</div>
 			
@@ -39,7 +40,7 @@
 	</div>
 	<div class="col-sm-12">
 		<div class="col-xs-3">
-			<img class="carta" ng-src="{{cementerio[0].url}}" ng-click="verCementerio(cementerio)">
+			<img class="carta" ng-src="{{cementerio[0].url}}" ng-click="verCementerio(cementerio, enJuego, mano)">
 		</div>
 
 <!--		<uib-carousel class="col-xs-3" active="active">-->
@@ -47,17 +48,18 @@
 <!--			</uib-slide>-->
 <!--		</uib-carousel>-->
 		<div class="col-xs-6">
-			<div class="col-xs-3" ng-repeat="item in enJuegoT">
-				<img class="carta" ng-click="verCarta(item)" src="{{item.url}}">
-				<button class="btn btn-danger" ng-click="retManoT(item)">Mano</button>
-				<button class="btn btn-danger" ng-click="retCemT(item)">Cementerio</button>
+			<div class="col-xs-3" ng-repeat="item in enJuegoT track by $index">
+				<img class="carta" ng-click="verCarta(item)" ng-src="{{item.url}}">
+				<button class="btn btn-danger" ng-click="retManoT(item, enJuegoT, mano)">Mano</button>
+				<button class="btn btn-danger" ng-click="retCemT(item, enJuegoT, cementerio)">Cementerio</button>
 				<button ng-if="item.tap" class="btn btn-danger" ng-click="usada(item)">N-tap</button>
 				<button ng-if="!item.tap" class="btn btn-success" ng-click="usada(item)">Tap</button>
 			</div>
 		</div>
-		<div class="col-xs-3" ng-repeat="item in mano">
+			{{mano}}
+		<div class="col-xs-3" ng-repeat="item in mano track by $index">
 			<img ng-click="verCarta(item)" ng-src="{{item.url}}">
-			<button class="btn btn-info" ng-click="juego(item)">Poner en juego</button>
+			<button class="btn btn-info" ng-click="juego(item, mano, enJuego)">Poner en juego</button>
 		</div>
 	<!--
 	<div class="col-sm-3">

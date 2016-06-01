@@ -19,7 +19,6 @@ app.controller('MenuController', function($scope, $modal, $cookieStore, $locatio
 				$scope.enJuego = [];
 				$scope.enJuegoT = [];
 				$scope.mazoBarajado = $filter('orderBy')($scope.mazo,$scope.random, true);
-				console.log($scope.mazoBarajado);
 				$cookieStore.remove("mazoBarajado");
 				$cookieStore.put("mazoBarajado",$scope.mazoBarajado.id);
 			}else{
@@ -29,72 +28,76 @@ app.controller('MenuController', function($scope, $modal, $cookieStore, $locatio
 			modal = modalCreate($modal,"danger", "Error", "Not connected with server.");
 		});
 	}
-		
-	$scope.robar = function(){
-		var carta = $scope.mazoBarajado.shift();
-		$scope.mano.push(carta);
+	
+	// Buenas practicas....
+	$scope.goodShift = function(a, b){
+		a.unshift(b);
 	}
 
-	$scope.mazoCementerio = function(){
-		var carta = $scope.mazoBarajado.shift();
-		$scope.cementerio.unshift(carta);
+	$scope.goodPush = function(a, b){
+		a.push(b);
 	}
 
-	$scope.desRobo = function(){
-		var carta = $scope.mano.pop();
-		$scope.mazoBarajado.unshift(carta);
+
+	$scope.robar = function(a, b){
+		var c = a.shift();
+		$scope.goodShift(b, c);
 	}
 
-	$scope.desCemen = function(){
-		var carta = $scope.cementerio.shift();
-		$scope.mazoBarajado.unshift(carta);
+	$scope.mazoCementerio = function(a, b){
+		var c = a.shift();
+		$scope.goodShift(b, c);
 	}
 
-	$scope.manoC = function(){
-		var carta = ($filter('orderBy')($scope.mano,$scope.random, true)).pop()
-		$scope.cementerio.unshift(carta);
-		var index = $scope.mano.indexOf(carta);
-		$scope.mano.splice(index, 1);
+	$scope.desRobo = function(a, b){
+		var c = a.shift();
+		$scope.goodShift(b, c);
 	}
 
-	$scope.juego = function(item){
-		var index = $scope.mano.indexOf(item);
-		$scope.mano.splice(index, 1);
-		$scope.enJuego.push(item);
+	$scope.desCemen = function(a, b){
+		var c = b.shift();
+		$scope.goodShift(a, c);
 	}
 
-	$scope.verCarta = function(preference){
-		modalVerCarta($modal, preference);
+	$scope.manoC = function(a, b){
+		var c = ($filter('orderBy')(a,$scope.random, true)).pop()
+		b.unshift(c);
+		var d = a.indexOf(c);
+		a.splice(d, 1);
 	}
 
-	$scope.retMano = function (item) {
-		var index = $scope.enJuego.indexOf(item);
-		$scope.enJuego.splice(index, 1);
-		$scope.mano.push(item);
+	$scope.juego = function(a, b, c){
+		$scope.remove(b, a);
+		$scope.goodShift(c, a);
+	}
+
+	$scope.verCarta = function(a){
+		modalVerCarta($modal, a);
+	}
+
+	$scope.retMano = function (a, b, c) {
+		$scope.remove(b, a);
+		$scope.goodShift(c, a);
 	};
 
-	$scope.retCem = function (item) {
-		var index = $scope.enJuego.indexOf(item);
-		$scope.enJuego.splice(index, 1);
-		$scope.cementerio.unshift(item);
+	$scope.retCem = function (a, b, c) {
+		$scope.remove(b, a);
+		$scope.goodShift(c, a);
 	};
 
-	$scope.retManoT = function (item) {
-		var index = $scope.enJuegoT.indexOf(item);
-		$scope.enJuegoT.splice(index, 1);
-		$scope.mano.push(item);
+	$scope.retManoT = function (a, b, c) {
+		$scope.remove(b, a);
+		$scope.goodShift(c, a);
 	};
 
-	$scope.retCemT = function (item) {
-		var index = $scope.enJuegoT.indexOf(item);
-		$scope.enJuegoT.splice(index, 1);
-		$scope.cementerio.unshift(item);
+	$scope.retCemT = function (a, b, c) {
+		$scope.remove(b, a);
+		$scope.goodShift(c, a);
 	};
 
-	$scope.tierra = function (item) {
-		var index = $scope.enJuego.indexOf(item);
-		$scope.enJuego.splice(index, 1);
-		$scope.enJuegoT.push(item);
+	$scope.tierra = function (a, b, c) {
+		$scope.remove(b, a);
+		$scope.goodShift(c, a);
 	};
 
 	$scope.barajar = function (item) {
@@ -105,34 +108,31 @@ app.controller('MenuController', function($scope, $modal, $cookieStore, $locatio
 		$scope.busB = true;
 	}
 
-	$scope.busJ = function(){
-		var index = $scope.mazoBarajado.indexOf($scope.busM);
-		$scope.mazoBarajado.splice(index, 1);
-		$scope.enJuego.push($scope.mazoBarajado.splice(index, 1));
-		$scope.busB = false;
-		console.log($scope.busM);
-		console.log($scope.cementerio);
+	$scope.busJ = function(a, b , c){
+		$scope.remove(b, a);
+		$scope.goodPush(c, a);
 	}
 
-	$scope.busMa = function(){
-		var index = $scope.mazoBarajado.indexOf($scope.busM);
-		$scope.mazoBarajado.splice(index, 1);
-		$scope.mano.push($scope.mazoBarajado.splice(index, 1));
-		$scope.busB = false;
-		console.log($scope.mazoBarajado.splice(index, 1));
+	$scope.remove = function(a, b){
+		a.splice(b, 1);
+	};
+
+	$scope.busMa = function(a, b , c){
+		$scope.remove(b, a);
+		$scope.goodPush(c, a);
 	}
 
-	$scope.usada = function (item) {
-		if(item.tap) {
-			item.tap = false;
-			console.log(item.tap);
+	$scope.usada = function (a) {
+		if(a.tap) {
+			a.tap = false;
+			console.log(a.tap);
 		}else{
-			item.tap = true;
-			console.log(item.tap);
+			a.tap = true;
+			console.log(a.tap);
 		}
 	};
 
-	$scope.buscar = function(cementerio){
-		modalVerCementerio($modal, cementerio);
+	$scope.verCementerio = function(cementerio, enJuego, mano){
+		modalVerCementerio($modal, cementerio, enJuego, mano);
 	}
 });

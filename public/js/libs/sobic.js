@@ -44,7 +44,7 @@ $( document ).ready(function() {
 	});
 });
 
-function modalVerCementerio($modal, cementerio){
+function modalVerCementerio($modal, cementerio, enJuego, mano){
 	var modalInstance = $modal.open({
 		templateUrl: 'partials/pages/cementerio.html',
 		controller: 'CementerioController',
@@ -53,6 +53,12 @@ function modalVerCementerio($modal, cementerio){
 		resolve: {
 			cementerio: function () {
 				return cementerio;
+			},
+			enJuego: function () {
+				return enJuego;
+			},
+			mano: function () {
+				return mano;
 			}
 		}
 	});
