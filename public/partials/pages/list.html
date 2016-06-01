@@ -1,0 +1,73 @@
+<div id="list" class="row" id="main-app">
+	<div class="col-sm-12">
+		<div class="col-xs-12">
+			<div class="col-xs-3">
+				<button class="btn btn-success" ng-click="inicio()">Iniciar</button>
+				<button class="btn btn-info" ng-if="mazoBarajado.length > 0" ng-click="mazoCementerio()">Exiliar1ªmazo</button>
+				<button class="btn btn-info" ng-if="mano.length > 0" ng-click="desRobo()">Des robar</button>
+				<button class="btn btn-info" ng-if="cementerio.length > 0" ng-click="desCemen()">Des cemen</button>
+				<button class="btn btn-info" ng-if="mano.length > 0" ng-click="manoC()">Carta azar m>c</button>
+				<button class="btn btn-info" ng-if="mazoBarajado.length > 0" ng-click="barajar()">Barajar</button>
+				<button class="btn btn-info" ng-if="!busB && mazoBarajado.length > 0" ng-click="buscar()">Buscar mazo</button>
+				<select ng-if="busB" class="form-control" ng-model="busM">
+					<option value="">Biblioteca: </option>
+					<option ng-repeat="item in mazoBarajado" value="{{item}}">{{item.nombre}}</option>
+				</select>
+				<button class="btn btn-info" ng-if="busB" ng-click="busJ()">Poner en juego</button>
+				<button class="btn btn-info" ng-if="busB" ng-click="busMa()">Poner en mano</button>
+				<img ng-if="mazoBarajado.length > 0" class="mazo" src="img/62.png" ng-click="robar()">
+				
+			</div>
+			<div class="col-xs-8">
+				<div class="col-xs-3" ng-repeat="item in enJuego">
+					<img class="mazo" ng-click="verCarta(item)" ng-src="{{item.url}}">
+					<button class="btn btn-danger" ng-click="retMano(item)">Mano</button>
+					<button class="btn btn-danger" ng-click="retCem(item)">Cementerio</button>
+					<button class="btn btn-danger" ng-click="tierra(item)">Tierra</button>
+					<button ng-if="item.tap" class="btn btn-danger" ng-click="usada(item)">N-tap</button>
+					<button ng-if="!item.tap" class="btn btn-success" ng-click="usada(item)">Tap</button>
+					{{busM}}
+				</div>
+			</div>
+			
+			<div class="col-xs-1">
+				<label title="Mazo">{{mazoBarajado.length}}</label>
+				<label title="Mano">{{mano.length}}</label>
+				<label title="Cementerio">{{cementerio.length}}</label>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<div class="col-xs-3">
+			<img class="carta" ng-src="{{cementerio[0].url}}" ng-click="verCementerio(cementerio)">
+		</div>
+
+<!--		<uib-carousel class="col-xs-3" active="active">-->
+<!--			<uib-slide class="mazo" ng-repeat="item.url in cementerio">-->
+<!--			</uib-slide>-->
+<!--		</uib-carousel>-->
+		<div class="col-xs-6">
+			<div class="col-xs-3" ng-repeat="item in enJuegoT">
+				<img class="carta" ng-click="verCarta(item)" src="{{item.url}}">
+				<button class="btn btn-danger" ng-click="retManoT(item)">Mano</button>
+				<button class="btn btn-danger" ng-click="retCemT(item)">Cementerio</button>
+				<button ng-if="item.tap" class="btn btn-danger" ng-click="usada(item)">N-tap</button>
+				<button ng-if="!item.tap" class="btn btn-success" ng-click="usada(item)">Tap</button>
+			</div>
+		</div>
+		<div class="col-xs-3" ng-repeat="item in mano">
+			<img ng-click="verCarta(item)" ng-src="{{item.url}}">
+			<button class="btn btn-info" ng-click="juego(item)">Poner en juego</button>
+		</div>
+	<!--
+	<div class="col-sm-3">
+		<div class="background col-xs-12 col-sm-10 col-sm-offset-1">
+			<h2><i class="fa fa-line-chart"></i> Top Five</h2>
+			<div ng-repeat="item in list | filter: filter | limitTo: 5" class="animate col-xs-12 col-sm-12">
+				<h6>{{item.name}} ({{item.experience}})</h6> 
+				<h6><img ng-if="!item.user.personal.gender" src="css/img/mujer.png"><img ng-if="item.user.personal.gender" src="css/img/hombre.png"> {{item.user.personal.name}}</h6>
+			</div>
+		</div>
+	</div>
+	-->
+</div>
